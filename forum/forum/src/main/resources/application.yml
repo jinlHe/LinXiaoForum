@@ -1,0 +1,18 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /boot
+spring:
+  datasource:
+    username: root
+    password: hjl200915
+    url: jdbc:mysql://localhost:3306/forum?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.springboot.bootdemo.entity
+  logging:
+    level:
+      com:
+        springboot:
+          mapper:debug
