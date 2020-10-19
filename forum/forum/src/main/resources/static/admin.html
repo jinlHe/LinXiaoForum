@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户信息管理</title>
+</head>
+<link rel="stylesheet" type="text/css" href="./css/admin.css"/><!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<body>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="tt-logo">
+    <img src="images/logo.png" width="50" height="50">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="font-size:15px">尊敬的管理员，欢迎来到凌霄论坛管理界面。<b>
+    <br /><br /><br />
+
+</div>
+
+<div id="admin">
+    <el-form action="" class="product-form">
+        <div class="form-item">
+            <label for="clientid">用户Id:</label>
+            <input id="clientid" type="number" v-model="searchObj.clientid"/>
+        </div>
+        <div class="form-item">
+            <label for="clientname">用户名:</label>
+            <input id="clientname" type="text" v-model="searchObj.clientname"/>
+        </div>
+        <div class="form-item">
+            <label for="clientpwd">密码:</label>
+            <input id="clientpwd" type="text" v-model="searchObj.clientpwd"/>
+        </div>
+        <div class="form-item">
+            <label for="clientemail">绑定邮箱:</label>
+            <input id="clientemail" type="text" v-model="searchObj.clientemail"/>
+        </div>
+        <div class="form-item">
+            <label for="clientright">用户权限:</label>
+            <input id="clientright" type="text" v-model="searchObj.clientright"/>
+        </div>
+        <div class="form-item">
+            <label for="logintime">登陆时间:</label>
+            <input id="logintime" type="text" v-model="searchObj.logintime"/>
+        </div>
+    </el-form>
+    <div class="btn-group">
+        <!--<button type="button" id="createBtn" @click="add">新建</button>-->
+        <button type="button" id="searchBtn" @click="select()">查询</button>
+    </div>
+    <div class="product-content">
+        <table id="product-table" cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <th>用户Id</th>
+                <th>用户名</th>
+                <th>密码</th>
+                <th>绑定邮箱</th>
+                <th>用户权限</th>
+                <th>登陆时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(list, index) in tableData">
+                <td>
+								<span>
+									{{list.clientid}}
+								</span>
+                </td>
+                <td>
+								<span v-if="mofiIndex !== index">
+									{{list.clientname}}
+								</span>
+                    <input type="text" v-model="list.clientname" v-else/>
+                </td>
+                <td>
+								<span v-if="mofiIndex !== index">
+									{{list.clientpwd}}
+								</span>
+                    <input type="text" v-model="list.clientpwd" v-else/>
+                </td>
+                <td>
+								<span v-if="mofiIndex !== index">
+									{{list.clientemail}}
+								</span>
+                    <input type="text" v-model="list.clientemail" v-else/>
+                </td>
+                <td>
+							<span v-if="mofiIndex !== index">
+									{{list.clientright}}
+								</span>
+                    <input type="text" v-else v-model="list.clientright" />
+                </td>
+                <td>
+							<span v-if="mofiIndex !== index">
+									{{list.logintime}}
+								</span>
+                    <input type="text" v-else v-model="list.logintime" />
+                </td>
+                <td class="operator" v-if="mofiIndex != index" style="text-align: center;">
+                    <button class="del" @click="del(list.clientid)" v-show="list.clientright == 1">删除</button>
+<!--                    <button class="update" @click="update(index, list)">修改</button>-->
+                </td>
+<!--                <td v-else class="operator">-->
+<!--                    <button type="button" class="update" @click="update(index, list)">保存</button>-->
+<!--                </td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="page">
+        <span>共{{total}}条</span>
+        <span>共{{Math.ceil(total/pageSize)}}页</span>
+        <span>第{{pageNum}}页</span>
+        <span class="prev" @click="prev" :style="{color: pageNum>1?'#337AB7':'#929292'}">上一页</span>
+        <div class="step">
+            <div class="step-wrapper">
+                <div class="step-item"></div>
+                <div v-for="i in Math.ceil(total/pageSize)" @click="pageChange(i)" class="step-item"></div>
+            </div>
+            <div class="step-con" :style="{width: pageNum*100/Math.ceil(total/pageSize)+'%'}"></div>
+
+        </div>
+        <input v-model.number="pageInput" type="text"></input>
+        <span style="font-weight: bolder; color: #337AB7; cursor: pointer;" @click="go">Go</span>
+        <span class="next" @click="next" :style="{color: pageNum<Math.ceil(total/pageSize)?'#337AB7':'#929292'}">下一页</span>
+    </div>
+</div>
+</body>
+<script src="./js/vue.js" type="text/javascript" charset="utf-8"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="./js/jquey3.4.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="./js/admin.js"></script>
+</html>
